@@ -1,5 +1,6 @@
 package br.com.ideltech.cloudparking.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import br.com.ideltech.cloudparking.controller.dto.ParkingCreateDTO;
 import br.com.ideltech.cloudparking.model.ParkingModel;
 
 @Service
@@ -39,6 +41,15 @@ public class ParkingService {
 
   public ParkingModel findById(String id) {
     return parkingMap.get(id);
+  }
+
+  public ParkingModel create(ParkingModel parkingCreate) {
+    String uuid = getUUID();
+    parkingCreate.setId(uuid);
+    parkingCreate.setEntryDate(LocalDateTime.now());
+    parkingMap.put(uuid, parkingCreate);
+    // parkingRepository.save(parkingCreate);
+    return parkingCreate;
   }
 
 }
