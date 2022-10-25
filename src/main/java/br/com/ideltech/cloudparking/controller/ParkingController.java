@@ -17,9 +17,13 @@ import br.com.ideltech.cloudparking.controller.dto.ParkingDTO;
 import br.com.ideltech.cloudparking.controller.mapper.ParkingMapper;
 import br.com.ideltech.cloudparking.model.ParkingModel;
 import br.com.ideltech.cloudparking.service.ParkingService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 @RestController
+@Api(tags = "Parking Controller")
 public class ParkingController {
 
   private final ParkingMapper parkingMapper;
@@ -31,12 +35,14 @@ public class ParkingController {
     this.parkingMapper = parkingMapper;
   }
   
+  @ApiIgnore
   @RequestMapping(value="/", method=RequestMethod.GET)
   public String hello() {
     
     return "Hello World! Java DIO";
   }
 
+  @ApiOperation("Find all parkings")
   @RequestMapping(value="/parking", method=RequestMethod.GET)
   @ResponseBody
   public ResponseEntity<List<ParkingDTO>> findAll() {
@@ -51,6 +57,7 @@ public class ParkingController {
     return new ResponseEntity<List<ParkingDTO>>(result, HttpStatus.OK);
   }
 
+  @ApiOperation("Find parking by id")
   @RequestMapping(value="/parking/{id}", method=RequestMethod.GET)
   @ResponseBody
   public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
@@ -60,6 +67,7 @@ public class ParkingController {
     return new ResponseEntity<ParkingDTO>(result, HttpStatus.OK);
   }
 
+  @ApiOperation("Create parking")
   @RequestMapping(value="/parking", method=RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO dto) {

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ideltech.cloudparking.controller.dto.ParkingCreateDTO;
 import br.com.ideltech.cloudparking.model.ParkingModel;
 
 @Service
