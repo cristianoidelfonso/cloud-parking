@@ -41,7 +41,7 @@ public class ParkingService {
 
   public ParkingModel findById(String id) {
     ParkingModel parking = parkingMap.get(id);
-    
+
     if(parking == null) {
       throw new ParkingNotFoundException(id);
     }
@@ -56,5 +56,21 @@ public class ParkingService {
     // parkingRepository.save(parkingCreate);
     return parkingCreate;
   }
+
+  public ParkingModel update(String id, ParkingModel parkingCreate) {
+    ParkingModel parking = findById(id);
+    parking.setColor(parkingCreate.getColor());
+    parking.setModel(parkingCreate.getModel());
+    parkingMap.replace(id, parking);
+    // parkingMap.replace(id, parkingCreate, parking);
+    return parking;
+  }
+
+  public void deleteById(String id) {
+    findById(id);
+    parkingMap.remove(id);
+  }
+
+  
 
 }

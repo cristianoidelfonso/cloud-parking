@@ -35,11 +35,11 @@ public class ParkingController {
     this.parkingMapper = parkingMapper;
   }
   
-  @ApiIgnore
+  @ApiOperation("Next class")
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String hello() {
     
-    return "Hello World! Java DIO";
+    return "Hello World! Java DIO <br> Próxima aula: Realizando os testes da APi e configurando as portas da aplicação.";
   }
 
   @ApiOperation("Find all parkings")
@@ -60,7 +60,7 @@ public class ParkingController {
   @ApiOperation("Find parking by id")
   @RequestMapping(value = "/parking/{id}", method = RequestMethod.GET)
   @ResponseBody
-  public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
+  public ResponseEntity<ParkingDTO> findById(@PathVariable(name = "id") String id) {
     
     ParkingModel parking = parkingService.findById(id);
     ParkingDTO result = parkingMapper.toParkingDTO(parking);
@@ -77,6 +77,29 @@ public class ParkingController {
     ParkingDTO result = parkingMapper.toParkingDTO(parkingModel);
     return new ResponseEntity<ParkingDTO>(result, HttpStatus.CREATED);
     // return ResponseEntity.status(HttpStatus.CREATED).body(result);
+  }
+
+  @ApiOperation("Update parking")
+  @RequestMapping(value = "/parking/{id}", method = RequestMethod.PUT)
+  @ResponseBody
+  public ResponseEntity<ParkingDTO> update(@PathVariable(name = "id") String id, @RequestBody ParkingCreateDTO dto) {
+
+    var parkingCreate = parkingMapper.toParkingCreate(dto);
+    ParkingModel parkingModel = parkingService.update(id, parkingCreate);
+    ParkingDTO result = parkingMapper.toParkingDTO(parkingModel);
+    return new ResponseEntity<ParkingDTO>(result, HttpStatus.OK);
+    // return ResponseEntity.status(HttpStatus.CREATED).body(result);
+  }
+
+  @ApiOperation("Delete parking by id")
+  @RequestMapping(value = "/parking/{id}", method = RequestMethod.DELETE)
+  @ResponseBody
+  public ResponseEntity<String> deleteById(@PathVariable String id) {
+
+    parkingService.deleteById(id);
+    
+    return ResponseEntity.noContent().build();
+    // return new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
   }
 
 
