@@ -1,24 +1,32 @@
 package br.com.ideltech.cloudparking.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ideltech.cloudparking.controller.dto.ParkingDTO;
+import br.com.ideltech.cloudparking.controller.mapper.ParkingMapper;
 import br.com.ideltech.cloudparking.model.ParkingModel;
 import br.com.ideltech.cloudparking.service.ParkingService;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
 public class ParkingController {
 
+  private final ParkingMapper parkingMapper;
   private final ParkingService parkingService;
 
-  public ParkingController (ParkingService parkingService) {
+  @Autowired
+  public ParkingController (ParkingService parkingService, ParkingMapper parkingMapper) {
     this.parkingService = parkingService;
+    this.parkingMapper = parkingMapper;
   }
   
   @RequestMapping(value="/", method=RequestMethod.GET)
@@ -27,14 +35,17 @@ public class ParkingController {
   }
 
   @RequestMapping(value="/parking", method=RequestMethod.GET)
-  public List<ParkingModel> findAll() {
-    
+  @ResponseBody
+  public ResponseEntity<List<ParkingDTO>> findAll() {
+
     // ParkingModel parking1 = new ParkingModel("1", "MG-1234", "MG", "Palio", "Prata" );
     // ParkingModel parking2 = new ParkingModel("2", "SP-1234", "SP", "Renegade", "Azul" );
     // ParkingModel parking3 = new ParkingModel("3", "BA-1234", "BA", "EcoSport", "Preto" );
     // return Arrays.asList(parking1, parking2, parking3);
 
-    return parkingService.findAll();
+    List<ParkingModel> parkingList = parkingService.findAll();
+    List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
+    return new ResponseEntity<List<ParkingDTO>>(result, HttpStatus.OK);
   }
 
 
