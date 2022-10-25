@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ideltech.cloudparking.controller.dto.ParkingDTO;
 import br.com.ideltech.cloudparking.controller.mapper.ParkingMapper;
 import br.com.ideltech.cloudparking.model.ParkingModel;
 import br.com.ideltech.cloudparking.service.ParkingService;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
@@ -46,6 +46,14 @@ public class ParkingController {
     List<ParkingModel> parkingList = parkingService.findAll();
     List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
     return new ResponseEntity<List<ParkingDTO>>(result, HttpStatus.OK);
+  }
+
+  @RequestMapping(value="/parking/{id}", method=RequestMethod.GET)
+  @ResponseBody
+  public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
+    ParkingModel parking = parkingService.findById(id);
+    ParkingDTO result = parkingMapper.toParkingDTO(parking);
+    return new ResponseEntity<ParkingDTO>(result, HttpStatus.OK);
   }
 
 

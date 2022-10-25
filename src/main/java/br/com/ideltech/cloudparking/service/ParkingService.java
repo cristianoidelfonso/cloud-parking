@@ -37,4 +37,8 @@ public class ParkingService {
     return parkingMap.values().stream().collect(Collectors.toList());
   }
 
+  public ParkingModel findById(String id) {
+    return parkingMap.get(id);
+  }
+
 }
