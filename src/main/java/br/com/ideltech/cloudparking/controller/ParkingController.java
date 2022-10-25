@@ -36,14 +36,14 @@ public class ParkingController {
   }
   
   @ApiIgnore
-  @RequestMapping(value="/", method=RequestMethod.GET)
+  @RequestMapping(value = "/", method = RequestMethod.GET)
   public String hello() {
     
     return "Hello World! Java DIO";
   }
 
   @ApiOperation("Find all parkings")
-  @RequestMapping(value="/parking", method=RequestMethod.GET)
+  @RequestMapping(value = "/parking", method = RequestMethod.GET)
   @ResponseBody
   public ResponseEntity<List<ParkingDTO>> findAll() {
 
@@ -58,7 +58,7 @@ public class ParkingController {
   }
 
   @ApiOperation("Find parking by id")
-  @RequestMapping(value="/parking/{id}", method=RequestMethod.GET)
+  @RequestMapping(value = "/parking/{id}", method = RequestMethod.GET)
   @ResponseBody
   public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
     
@@ -68,7 +68,7 @@ public class ParkingController {
   }
 
   @ApiOperation("Create parking")
-  @RequestMapping(value="/parking", method=RequestMethod.POST)
+  @RequestMapping(value = "/parking", method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO dto) {
     
