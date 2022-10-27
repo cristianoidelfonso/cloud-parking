@@ -7,6 +7,13 @@ public class ParkingCreateDTO {
   private String model;
   private String color;
 
+  public ParkingCreateDTO(String license, String state, String model, String color) {
+    this.license = license;
+    this.state = state;
+    this.model = model;
+    this.color = color;
+  }
+
   public String getLicense() {
     return license;
   }

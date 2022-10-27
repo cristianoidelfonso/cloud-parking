@@ -1,6 +1,8 @@
 package br.com.ideltech.cloudparking.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +21,6 @@ import br.com.ideltech.cloudparking.model.ParkingModel;
 import br.com.ideltech.cloudparking.service.ParkingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
-
 
 @RestController
 @Api(tags = "Parking Controller")
@@ -34,12 +34,14 @@ public class ParkingController {
     this.parkingService = parkingService;
     this.parkingMapper = parkingMapper;
   }
-  
+
   @ApiOperation("Next class")
   @RequestMapping(value = "/", method = RequestMethod.GET)
-  public String hello() {
-    
-    return "Hello World! Java DIO <br> Próxima aula: Realizando os testes da APi e configurando as portas da aplicação.";
+  public Map<String, Object> hello() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("mensagem", "Hello World! Java DIO");
+    map.put("Próxima aula:", "Realizando os testes da APi e configurando as portas da aplicação.");
+    return map;
   }
 
   @ApiOperation("Find all parkings")
@@ -100,6 +102,14 @@ public class ParkingController {
     
     return ResponseEntity.noContent().build();
     // return new ResponseEntity<String>("Successfully Deleted", HttpStatus.NO_CONTENT);
+  }
+
+  @ApiOperation("Exit of parking")
+  @RequestMapping(value = "/paking/{id}", method = RequestMethod.POST)
+  @ResponseBody
+  public ResponseEntity<ParkingDTO> exit(@PathVariable(name = "id") String id) {
+    ParkingModel parking = parkingService.exit(id); 
+    return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
   }
 
 

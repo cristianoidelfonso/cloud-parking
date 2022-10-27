@@ -17,19 +17,19 @@ public class ParkingService {
   
   private static Map<String, ParkingModel> parkingMap = new HashMap<>();
 
-  static {
-    var id1 = getUUID();
-    var id2 = getUUID();
-    var id3 = getUUID();
+  // static {
+  //   var id1 = getUUID();
+  //   var id2 = getUUID();
+  //   var id3 = getUUID();
 
-    ParkingModel parking1 = new ParkingModel(id1, "MG-1234", "MG", "Palio", "Prata");
-    ParkingModel parking2 = new ParkingModel(id2, "SP-1234", "SP", "Renegade", "Azul" );
-    ParkingModel parking3 = new ParkingModel(id3, "BA-1234", "BA", "EcoSport", "Preto");
+  //   ParkingModel parking1 = new ParkingModel(id1, "MG-1234", "MG", "Palio", "Prata");
+  //   ParkingModel parking2 = new ParkingModel(id2, "SP-1234", "SP", "Renegade", "Azul" );
+  //   ParkingModel parking3 = new ParkingModel(id3, "BA-1234", "BA", "EcoSport", "Preto");
     
-    parkingMap.put(id1, parking1);
-    parkingMap.put(id2, parking2);
-    parkingMap.put(id3, parking3);
-  }
+  //   parkingMap.put(id1, parking1);
+  //   parkingMap.put(id2, parking2);
+  //   parkingMap.put(id3, parking3);
+  // }
 
   private static String getUUID() {
     return UUID.randomUUID().toString().replace("-", "");
@@ -69,6 +69,10 @@ public class ParkingService {
   public void deleteById(String id) {
     findById(id);
     parkingMap.remove(id);
+  }
+
+  public ParkingModel exit(String id) {
+    return null;
   }
 
   
