@@ -75,6 +75,14 @@ public class ParkingService {
     return null;
   }
 
+  public ParkingModel checkOut(String id) {
+    ParkingModel parking = findById(id);
+    parking.setExitDate(LocalDateTime.now());
+    // parking.setBill(ParkingCheckOut.getBill(parking));
+    // parkingRepository.save(parking);
+    return parking;
+  }
+
   
 
 }

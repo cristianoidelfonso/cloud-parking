@@ -40,7 +40,7 @@ public class ParkingController {
   public Map<String, Object> hello() {
     Map<String, Object> map = new HashMap<>();
     map.put("mensagem", "Hello World! Java DIO");
-    map.put("Próxima aula:", "Realizando os testes da APi e configurando as portas da aplicação.");
+    map.put("Próxima aula:", "Realizando alterações no Service e criando a interface Repository.");
     return map;
   }
 

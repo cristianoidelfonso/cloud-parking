@@ -61,6 +61,24 @@ public class ParkingControllerTest {
   }
 
   @Test
+  public void whenCreateThenCkeckIsCreated() {
+    port = 8082;
+    var createDTO = new ParkingCreateDTO("MG-1234", "MG", "Palio", "Prata");
+    given()
+        .when()
+        .contentType(ContentType.JSON)
+        .body(createDTO)
+        .post("/parking")
+        .then()
+        .contentType(ContentType.JSON).statusCode(HttpStatus.CREATED.value())
+        .body("license", Matchers.equalTo("MG-1234"))
+        .body("state", Matchers.equalTo("MG"))
+        .body("model", Matchers.equalTo("Palio"))
+        .body("color", Matchers.equalTo("Prata"));
+
+  }
+
+  @Test
   public void whenFindAllThenCkechResult() {
     port = 8082;
     given()
@@ -72,22 +90,6 @@ public class ParkingControllerTest {
       .extract().response().body().prettyPrint();  
   }
 
-  @Test
-  public void whenCreateThenCkeckIsCreated() {
-    port = 8082;
-    var createDTO = new ParkingCreateDTO("MG-1234", "MG", "Palio", "Prata");
-    given()
-      .when()
-        .contentType(ContentType.JSON)
-        .body(createDTO)
-        .post("/parking")
-      .then()
-        .contentType(ContentType.JSON).statusCode(HttpStatus.CREATED.value())
-        .body("license", Matchers.equalTo("MG-1234"))
-        .body("state", Matchers.equalTo("MG"))
-        .body("model", Matchers.equalTo("Palio"))
-        .body("color", Matchers.equalTo("Prata"));
-
-  }
+  
 
 }
